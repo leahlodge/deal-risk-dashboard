@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Deal Screener</title>
+    <link rel="icon" type="image/png" href="image.png">
+    <link rel="stylesheet" href="screener.css">
+</head>
+
+<body>
+
+<!-- TOP NAV -->
+<div class="top-nav">
+
+  
+
+    <div class="nav-links">
+        <span class="active">Overview</span>
+
+        <span
+            onclick="window.location.href='index.html'"
+            style="cursor: pointer;"
+        >
+            Deal Analysis
+        </span>
+
+        <span
+            onclick="window.location.href='upload.html'"
+            style="cursor: pointer;"
+        >
+            Upload
+        </span>
+    </div>
+
+    <!-- RIGHT SIDE -->
+    <div class="top-right">
+
+        <div class="logged-user">
+            Logged in as:
+            <span id="userRole">Loading..</span>
+        </div>
+
+        <button onclick="logout()" class="logout-btn">
+            Logout
+        </button>
+
+    </div>
+
+</div>
+
+        </div>
+
+    </div>
+
+    <!-- MAIN CONTAINER -->
+    <div class="container">
+
+        <!-- LEFT SIDEBAR -->
+        <div class="filters">
+
+            <h3>Filters</h3>
+
+            <select id="sectorFilter">
+                <option value="">Sector</option>
+            </select>
+
+            <select id="regionFilter">
+                <option value="">Region</option>
+            </select>
+
+            <select id="revenueFilter">
+                <option value="">Revenue Range</option>
+            </select>
+
+            <select id="riskFilter">
+                <option value="">Risk Rating</option>
+                <option value="green">Low Risk</option>
+                <option value="yellow">Moderate Risk</option>
+                <option value="red">High Risk</option>
+            </select>
+
+            <button onclick="resetFilters()" class="reset-btn">
+                Reset Filters
+            </button>
+
+            <!-- STATUS FILTERS -->
+            <div class="status-filters">
+                <span onclick="filterStatus('all')">All</span>
+                <span onclick="filterStatus('new')">New</span>
+                <span onclick="filterStatus('review')">Under Review</span>
+                <span onclick="filterStatus('approved')">Approved</span>
+            </div>
+
+            <!-- SECTOR DISTRIBUTION -->
+            <div class="summary-box">
+                <h4>Sector Distribution</h4>
+                <div id="sectorSummary"></div>
+            </div>
+
+            <!-- REGION BREAKDOWN -->
+            <div class="summary-box">
+                <h4>Region Breakdown</h4>
+                <div id="regionSummary"></div>
+            </div>
+
+            <!-- APPROVAL CONVERSION -->
+            <div class="summary-box">
+                <h4>Approval Conversion</h4>
+                <p id="approvalRate">0%</p>
+            </div>
+
+        </div>
+
+        <!-- RIGHT MAIN PANEL -->
+        <div class="main">
+
+            <!-- KPI CARDS -->
+            <div class="kpi-cards">
+
+                <div class="kpi-card">
+                    <h4>Total Deals</h4>
+                    <p id="totalDeals">0</p>
+                </div>
+
+                <div class="kpi-card">
+                    <h4>Approved Deals</h4>
+                    <p id="approvedDeals">0</p>
+                </div>
+
+                <div class="kpi-card">
+                    <h4>High Risk</h4>
+                    <p id="highRiskDeals">0</p>
+                </div>
+
+                <div class="kpi-card">
+                    <h4>Average Risk Score</h4>
+                    <p id="avgRiskScore">0</p>
+                </div>
+
+            </div>
+
+            <!-- TABLE SECTION -->
+            <div class="table-section">
+
+                <div class="table-header">
+                <h2>Deal Screener</h2>
+                <button onclick="exportCSV()" class="export-btn">
+                        Export CSV
+                    </button>
+                </div>
+
+                <input
+                    type="text"
+                    id="searchTop"
+                    placeholder="Search company or deal"
+                >
+
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Deal</th>
+                            <th>Sector</th>
+                            <th>Revenue</th>
+                            <th>Debt / EBITDA</th>
+                            <th>Risk Score</th>
+                            <th>Rating</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+
+                    <tbody id="dealTable"></tbody>
+                </table>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <script src="screener.js"></script>
+
+</body>
+</html>

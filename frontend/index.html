@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Deal Analysis Dashboard</title>
+    <link rel="icon" type="image/png" href="image.png">
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+
+  <!-- TOP NAV -->
+<div class="top-nav">
+
+    <div class="nav-links">
+        <span
+            onclick="window.location.href='screener.html'"
+            style="cursor: pointer;"
+        >
+            Overview
+        </span>
+
+        <span class="active">
+            Deal Analysis
+        </span>
+
+        <span
+            onclick="window.location.href='upload.html'"
+            style="cursor: pointer;"
+        >
+            Upload
+        </span>
+    </div>
+
+    <div class="top-right">
+
+        <div class="logged-user">
+            Logged in as:
+            <span id="userRole"></span>
+        </div>
+
+        <button onclick="logout()" class="logout-btn">
+            Logout
+        </button>
+
+    </div>
+
+</div>
+
+    <!-- BACK LINK -->
+    <div class="back-link-wrapper">
+        <a href="screener.html" class="back-link">
+            -- Back to Deal Screener
+        </a>
+    </div>
+
+    <!-- MAIN DASHBOARD -->
+    <main id="dashboard">
+
+        <!-- EXECUTIVE SUMMARY -->
+        <div class="executive-summary-card">
+
+            <div class="summary-left">
+                <h1 id="top-company-name">Company Name</h1>
+
+                <div class="summary-tags">
+                    <span id="sector">Sector</span>
+                    <span id="region">Region</span>
+                    <span id="revenue-range">Revenue</span>
+                </div>
+            </div>
+
+            <div class="summary-right">
+                <h2 id="deal-name">Deal #1</h2>
+
+                <!-- Risk Ring -->
+                <div class="risk-ring-wrapper">
+                    <svg class="risk-ring-svg" viewBox="0 0 80 80">
+
+                        <!-- Background -->
+                        <circle
+                            cx="40"
+                            cy="40"
+                            r="32"
+                            fill="none"
+                            stroke="rgba(255,255,255,0.12)"
+                            stroke-width="6"
+                        />
+
+                        <!-- Progress Arc -->
+                        <circle
+                            id="risk-ring-arc"
+                            cx="40"
+                            cy="40"
+                            r="32"
+                            fill="none"
+                            stroke="#d97706"
+                            stroke-width="6"
+                            stroke-dasharray="201.06"
+                            stroke-dashoffset="201.06"
+                            stroke-linecap="round"
+                            transform="rotate(-90 40 40)"
+                        />
+
+                        <!-- Score -->
+                        <text
+                            id="risk-ring-score"
+                            x="40"
+                            y="36"
+                            text-anchor="middle"
+                            fill="white"
+                            font-size="18"
+                            font-weight="700"
+                            font-family="Segoe UI, sans-serif"
+                        >
+                            --
+                        </text>
+
+                        <text
+                            x="40"
+                            y="50"
+                            text-anchor="middle"
+                            fill="rgba(255,255,255,0.45)"
+                            font-size="10"
+                            font-family="Segoe UI, sans-serif"
+                        >
+                            / 100
+                        </text>
+
+                    </svg>
+
+                    <div class="risk-ring-label">
+                        <span class="risk-ring-title">Risk Score</span>
+                        <span id="risk-score-badge" class="risk-score-badge">
+                            -- / 100
+                        </span>
+                    </div>
+                </div>
+
+                <div class="deal-meta">
+                    <p id="deal-size-header">Deal Size</p>
+                    <p id="instrument-header">Instrument</p>
+                    <p id="status-header">Status</p>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- KPI CARDS -->
+        <div id="metric-cards">
+
+            <div class="metric-card" id="kpi-revenue">
+                <div class="metric-label">Revenue</div>
+                <div class="metric-value" id="revenue">—</div>
+                <div class="metric-subtext" id="revenue-subtext">—</div>
+            </div>
+
+            <div class="metric-card" id="kpi-ebitda">
+                <div class="metric-label">EBITDA</div>
+                <div class="metric-value" id="ebitda">—</div>
+                <div class="metric-subtext" id="ebitda-subtext">—</div>
+            </div>
+
+            <div class="metric-card" id="kpi-debt">
+                <div class="metric-label">Debt / EBITDA</div>
+                <div class="metric-value" id="debt-ebitda">—</div>
+                <div class="metric-subtext" id="debt-subtext">—</div>
+            </div>
+
+            <div class="metric-card" id="kpi-coverage">
+                <div class="metric-label">Interest Coverage</div>
+                <div class="metric-value" id="interest-coverage-kpi">—</div>
+                <div class="metric-subtext" id="coverage-subtext">—</div>
+            </div>
+
+        </div>
+
+        <!-- FINANCIAL TRENDS -->
+        <div class="card financial-card">
+            <h2>Financial Trends</h2>
+
+            <div class="charts-row">
+                <div class="chart-box">
+                    <canvas id="revenueChart"></canvas>
+                </div>
+
+                <div class="chart-box">
+                    <canvas id="ebitdaMarginChart"></canvas>
+                </div>
+
+                <div class="chart-box">
+                    <canvas id="debtChart"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <!-- MAIN GRID -->
+        <div class="dashboard-grid">
+
+            <!-- LEFT PANEL -->
+            <div class="left-panel">
+
+                <!-- DEAL STRUCTURE -->
+                <div class="card deal-structure">
+                    <h2>Deal Structure</h2>
+
+                    <div class="deal-structure-row">
+                        <span class="ds-label">Instrument</span>
+                        <span class="ds-value" id="instrument">—</span>
+                    </div>
+
+                    <div class="deal-structure-row">
+                        <span class="ds-label">Deal Size</span>
+                        <span class="ds-value" id="deal-size">—</span>
+                    </div>
+
+                    <div class="deal-structure-row">
+                        <span class="ds-label">Interest Rate</span>
+                        <span class="ds-value" id="interest-rate">—</span>
+                    </div>
+
+                    <div class="deal-structure-row">
+                        <span class="ds-label">Maturity</span>
+                        <span class="ds-value" id="maturity">—</span>
+                    </div>
+
+                    <div class="deal-structure-row">
+                        <span class="ds-label">Status</span>
+                        <span class="ds-value ds-status" id="status">—</span>
+                    </div>
+                </div>
+
+                <!-- RISK INDICATORS -->
+                <div class="card risk-panel">
+                    <h2>Risk Indicators</h2>
+
+                    <div class="risk-row">
+                        <span class="dot blue"></span>
+                        <span>Leverage Ratio</span>
+                        <span class="risk-value" id="leverage-ratio">—</span>
+                        <span class="risk-pill blue" id="leverage-label">—</span>
+                    </div>
+
+                    <div class="risk-row">
+                        <span class="dot blue"></span>
+                        <span>Interest Coverage</span>
+                        <span class="risk-value" id="coverage-ratio">—</span>
+                        <span class="risk-pill blue" id="coverage-label">—</span>
+                    </div>
+
+                    <div class="risk-row">
+                        <span class="dot blue"></span>
+                        <span>Liquidity</span>
+                        <span class="risk-value" id="liquidity-ratio">—</span>
+                        <span class="risk-pill blue" id="liquidity-label">—</span>
+                    </div>
+
+                    <div class="risk-row">
+                        <span class="dot blue"></span>
+                        <span>Profitability</span>
+                        <span class="risk-value" id="profitability-ratio">—</span>
+                        <span class="risk-pill blue" id="profitability-label">—</span>
+                    </div>
+                </div>
+
+                <!-- ANALYST NOTES  -->
+                <div class="card analyst-notes">
+
+                    <div class="analyst-notes-header">
+                        <h2>Analyst Notes</h2>
+                        <span class="notes-autosave-indicator" id="notes-autosave">
+                            —
+                        </span>
+                    </div>
+
+                    <textarea
+                        id="analyst-notes"
+                        placeholder="Write deal observations, risks, investment comments..."
+                        oninput="updateCharCount(this)"
+                    ></textarea>
+
+                    <div class="notes-footer">
+                        <span class="notes-char-count" id="notes-char-count">
+                            0 characters
+                        </span>
+
+                        <button onclick="saveNotes()" class="save-notes-btn">
+                            Save Notes
+                        </button>
+                    </div>
+
+                    <p id="notes-timestamp" class="notes-timestamp">
+                        Last updated: —
+                    </p>
+
+                </div>
+
+            </div>
+
+            <!-- RIGHT PANEL -->
+            <div class="right-panel">
+
+                <!-- OVERALL RISK -->
+                <div class="card overall-risk-card">
+
+                    <div class="risk-band band-yellow" id="risk-band">
+                        <span class="risk-band-level" id="overall-risk-light">—</span>
+                        <span class="risk-band-score" id="risk-band-score">
+                            Score — / 100
+                        </span>
+                    </div>
+
+                    <div class="overall-risk-body">
+                        <p id="overall-risk-label">—</p>
+                        <p id="risk-summary-text">
+                            Recommendation and investment committee summary will appear here.
+                        </p>
+
+                        <div
+                            class="risk-action-box"
+                            id="risk-action-box"
+                            style="display:none;"
+                        ></div>
+                    </div>
+
+                </div>
+
+                <!-- RISK FLAGS -->
+                <div class="card risk-flags">
+                    <div class="risk-flags-header">
+                        <h2>Risk Flags</h2>
+                        <span class="flag-count-badge" id="flag-count-badge">
+                            0 flags
+                        </span>
+                    </div>
+
+                    <ul id="risk-flags-list"></ul>
+                </div>
+
+                <!-- COVENANT MONITORING -->
+                <div class="card covenant-monitoring">
+                    <h2>Covenant Monitoring</h2>
+
+                    <div class="covenant-row">
+                        <div class="covenant-title">Leverage Covenant Passed</div>
+                        <div class="covenant-detail">Max Allowed: 5.5x</div>
+
+                        <div class="covenant-current">
+                            Current:
+                            <span id="covenant-leverage">—</span>
+                        </div>
+
+                        <div class="covenant-progress-track">
+                            <div
+                                class="covenant-progress-fill safe"
+                                id="covenant-leverage-bar"
+                                style="width: 0%;"
+                            ></div>
+                        </div>
+
+                        <div class="covenant-progress-label">
+                            <span id="covenant-leverage-bar-label"></span>
+                        </div>
+                    </div>
+
+                    <div class="covenant-row warning">
+                        <div class="covenant-title">
+                            Interest Coverage Near Breach
+                        </div>
+
+                        <div class="covenant-detail">
+                            Minimum Required: 2.0x
+                        </div>
+
+                        <div class="covenant-current">
+                            Current:
+                            <span id="covenant-coverage">—</span>
+                        </div>
+
+                        <div class="covenant-progress-track">
+                            <div
+                                class="covenant-progress-fill danger"
+                                id="covenant-coverage-bar"
+                                style="width: 0%;"
+                            ></div>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </main>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="script.js"></script>
+
+</body>
+</html>
+
+
+
+

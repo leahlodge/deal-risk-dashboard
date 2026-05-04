@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="image.png">
+    <title>Login | Dashboard</title>
+    <link rel="stylesheet" href="login.css">
+</head>
+<body class="login-bg">
+
+    <!-- LOGO -->
+    <div class="logo">
+        <span></span>Deal Analysis Dashboard
+    </div>
+
+    <!-- LOGIN CARD -->
+    <div class="login-card">
+        <h1>Welcome Back</h1>
+        <p class="subtitle">Sign in to access the analyst dashboard</p>
+
+        <form id="loginForm">
+
+            <div class="input-group">
+                <label>Username</label>
+                <div class="input-icon">
+                    
+                    <input type="text" id="username" placeholder="Enter username" required>
+                </div>
+            </div>
+
+            <div class="input-group">
+                <label>Password</label>
+                <div class="input-icon">
+                    
+                    <input type="password" id="password" placeholder="Enter password" required>
+                </div>
+                <div class="forgot">
+                    <a href="#">Forgot password?</a>
+                </div>
+            </div>
+
+            <button type="submit" class="login-btn">Sign In</button>
+
+        </form>
+
+        <p id="error-message"></p>
+
+        <div class="card-footer">
+            2025 Deal Analysis Dashboard &nbsp;·&nbsp;
+            <a href="#">Privacy Policy</a>
+        </div>
+    </div>
+
+    <script src="login.js"></script>
+</body>
+</html>

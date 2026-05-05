@@ -1,35 +1,49 @@
-Setup
-Requirements
-Python 3.10+
-pip
-
-
 
 Deal Risk Analysis Dashboard
 How to Run the Project: 
 
-Step 1 — Install Dependencies
-Open terminal inside the project folder and run:
-pip install -r requirements.txt
+Step 1 — Open the Backend Folder in Terminal
+Navigate to the project folder where main.py and requirements.txt are located.
 
-Step 2 — Start the Backend Server
-Run:
-./start.sh
-or 
-uvicorn main --reload
+cd deal-risk-dashboard
+cd backend
+
+
+Step 2  — Create the needed  Virtual Environment (venv)
+py -m venv venv
+
+Step 3 — Activate the Virtual Environment
+venv\Scripts\activate
+
+Once activated, you should see:( venv)
+
+Step 4 — Install Dependencies
+
+Run: pip install -r requirements.txt
+
+If pip does not work, use:
+pip3 install -r requirements.txt
+
+Step 5 — Start the Backend Server
+
+Run: uvicorn main:app --reload
 
 The API will run at:
 http://127.0.0.1:8000
 
-Swagger documentation is available at:
-http://127.0.0.1:8000/docs
+Then in a second terminal 
+
+Step 6 — Start the Frontend Server
+cd deal-risk-dashboard
+cd frontend
+
+Then Run: py -m http.server 3000
+
+Step 7 — Open the browser 
+http://localhost:3000/login.html
 
 
-Step 3 — Open the Frontend
-Open the HTML files directly in the browser at :http://localhost:3000/login.html
-
-
-Step 4 - Login Credentials 
+Step 8 - Login Credentials 
 
 Admin Account
 Username: sarah.jones
@@ -45,3 +59,7 @@ Password: emma123
 
 API  documentation is available at:
 http://127.0.0.1:8000/docs
+
+N.B.:
+uvicorn only runs the backend API
+py -m http.server 3000 runs the frontend

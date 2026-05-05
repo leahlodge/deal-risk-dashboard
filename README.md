@@ -1,3 +1,10 @@
+Setup
+Requirements
+Python 3.10+
+pip
+
+
+
 Deal Risk Analysis Dashboard
 How to Run the Project: 
 

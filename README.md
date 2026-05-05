@@ -19,7 +19,7 @@ http://127.0.0.1:8000/docs
 
 
 Step 3 — Open the Frontend
-Open the HTML files directly in the browser at :http://localhost:3000/frontend /login.html
+Open the HTML files directly in the browser at :http://localhost:3000/frontend/login.html
 
 
 Step 4 - Login Credentials 
